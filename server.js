@@ -125,9 +125,17 @@ app.post('/v1/api/login', function(req,res,next){
   	})(req, res, next);
 });
 
+app.get('/v1/api/logout', function (req, res) {
+  req.session.destroy(function(err, out){
+    if(err){
+      return next(err)
+    }
+    res.status(200).json({ success: true })
+  });
+});
+
 app.get('/v1/api/signedin', function(req, res){
-  console.log(req.user)
-	res.json({user: req.user})
+	res.json({user: req.user != null})
 });
 
 app.listen(PORT);
